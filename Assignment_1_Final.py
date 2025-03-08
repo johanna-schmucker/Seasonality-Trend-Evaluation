@@ -11,7 +11,7 @@ st.title("Passenger Travel Trends: Seasonality Trend Evaluation & Air Transport 
 st.write("Question: Is the Aviation Business continuously growing and impacted by Seasonality?")
 
 #Google Sheets link (data)
-google_sheet_url = "https://docs.google.com/spreadsheets/d/1KRfLiDaHEx26R77QZAjIAymjekU71xsniSwNUMkqrWk/gviz/tq?tqx=out:csv"
+google_sheet_url = st.secrets["gcs]["google_sheets_url]
 
 #load dataset and refresh every 60 seconds
 @st.cache_data(ttl = 60)
