@@ -19,8 +19,7 @@ try:
     #st.dataframe(df.head())
 except KeyError:
     st.error("️Google Sheets URL not found in Streamlit secrets! Please add it to `.streamlit/secrets.toml` locally or in Streamlit Cloud.")
-except Exception as e: 
-    st.error("Error loading data")
+    st.stop()
 
 #load dataset and refresh every 60 seconds
 @st.cache_data(ttl = 600)
