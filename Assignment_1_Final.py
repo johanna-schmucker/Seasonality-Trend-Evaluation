@@ -13,9 +13,14 @@ st.write("Question: Is the Aviation Business continuously growing and impacted b
 #Google Sheets link (data)
 try:
     google_sheet_url = st.secrets["gsheets"]["public_gsheet_url"]
+    #st.write("Using Google Sheets CSV URL:", google_sheet_url)
+    #df = pd.read_csv(google_sheet_url)
+    #st.write("loaded data!")
+    #st.dataframe(df.head())
 except KeyError:
     st.error("️Google Sheets URL not found in Streamlit secrets! Please add it to `.streamlit/secrets.toml` locally or in Streamlit Cloud.")
-    st.stop()
+except Exception as e: 
+    st.error("Error loading data")
 
 #load dataset and refresh every 60 seconds
 @st.cache_data(ttl = 600)
