@@ -102,7 +102,7 @@ if st.button("Show me a chart"):
 
 #show the selected chart
 if st.session_state.chart_shown:
-    st.subheader("Random Chart:")
+    st.subheader("Chart Display:")
     if st.session_state.chart_shown == "A":
         st.pyplot(figure_A)
     else:
