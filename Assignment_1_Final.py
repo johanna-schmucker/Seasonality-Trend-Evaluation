@@ -11,13 +11,16 @@ st.title("Passenger Travel Trends: Seasonality Trend Evaluation & Air Transport 
 st.write("Question: Is the Aviation Business continuously growing and impacted by Seasonality?")
 
 #Google Sheets link (data)
-google_sheet_url = st.secrets["gcs"]["google_sheets_url"]
+try:
+    google_sheet_url = st.secrets["gsheets"]["public_gsheet_url"]
+except KeyError:
+    st.error("️Google Sheets URL not found in Streamlit secrets! Please add it to `.streamlit/secrets.toml` locally or in Streamlit Cloud.")
+    st.stop()
 
 #load dataset and refresh every 60 seconds
-@st.cache_data(ttl = 60)
+@st.cache_data(ttl = 600)
 def load_data():
-    df = pd.read_csv(google_sheet_url)
-    return df
+    return pd.read_csv(google_sheet_url)
 data = load_data()
 
 #dictionary containing the grouping of months into seasons
