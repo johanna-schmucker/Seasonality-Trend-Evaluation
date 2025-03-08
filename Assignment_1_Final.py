@@ -9,15 +9,14 @@ import time
 #set the app title and the business question
 st.title("Passenger Travel Trends: Seasonality Trend Evaluation & Air Transport Growth Analysis")
 st.write("Question: Is the Aviation Business continuously growing and impacted by Seasonality?")
-st.write(st.secrets)
+
+st.write("Debugging: Checking available secrets")
+st.write("content:", st.secrets)
 
 #Google Sheets link (data)
 try:
     google_sheet_url = st.secrets["gsheets"]["public_gsheet_url"]
     st.write("Using Google Sheets CSV URL:", google_sheet_url)
-    #df = pd.read_csv(google_sheet_url)
-    #st.write("loaded data!")
-    #st.dataframe(df.head())
 except KeyError:
     st.error("️Google Sheets URL not found in Streamlit secrets! Please add it to `.streamlit/secrets.toml` locally or in Streamlit Cloud.")
     st.stop()
