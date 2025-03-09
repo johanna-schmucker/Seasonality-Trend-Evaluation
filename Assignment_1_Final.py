@@ -10,22 +10,28 @@ import time
 st.title("Passenger Travel Trends: Seasonality Trend Evaluation & Air Transport Growth Analysis")
 st.write("Question: Is the Aviation Business continuously growing and impacted by Seasonality?")
 
-st.write("Debugging: Checking available secrets")
-st.write("content:", st.secrets)
-
-#Google Sheets link (data)
-try:
-    google_sheet_url = st.secrets["gsheets"]["public_gsheet_url"]
-    st.write("Using Google Sheets CSV URL:", google_sheet_url)
-except KeyError:
-    st.error("️Google Sheets URL not found in Streamlit secrets! Please add it to `.streamlit/secrets.toml` locally or in Streamlit Cloud.")
-    st.stop()
-
-#load dataset and refresh every 60 seconds
-@st.cache_data(ttl = 600)
 def load_data():
-    return pd.read_csv(google_sheet_url)
+    try:
+        google_sheet_url = st.secrets["gsheets"]["public_gsheet_url"]
+        #read CSV with proper formatting handling
+        df = pd.read_csv(google_sheet_url, quotechar = '"', skipinitialspace = True, dtype = {"year": int, "month": str, "passengers": int}  # Ensure correct types)
+
+        #fix column names if they have extra quotes
+        df.columns = df.columns.str.replace('"', '').str.strip()
+
+        #fix number formatting issue
+        if 'year' in df.columns:
+            df["year"] = df["year"].astype(str).str.replace(",", "").astype(int)
+
+        return df
+    except Exception as e:
+        st.error(f"Failed to load CSV: {e}")
+        return None
+
+#load data
 data = load_data()
+if data is None:
+    st.stop()
 
 #dictionary containing the grouping of months into seasons
 month_seasons = {
