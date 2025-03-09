@@ -14,7 +14,7 @@ def load_data():
     try:
         google_sheet_url = st.secrets["gsheets"]["public_gsheet_url"]
         #read CSV with proper formatting handling
-        df = pd.read_csv(google_sheet_url, quotechar = '"', skipinitialspace = True, dtype = {"year": int, "month": str, "passengers": int}  # Ensure correct types)
+        df = pd.read_csv(google_sheet_url, quotechar = '"', skipinitialspace = True, dtype = {"year": int, "month": str, "passengers": int})
 
         #fix column names if they have extra quotes
         df.columns = df.columns.str.replace('"', '').str.strip()
